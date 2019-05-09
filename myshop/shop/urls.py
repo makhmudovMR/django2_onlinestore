@@ -7,4 +7,5 @@ app_name = ShopConfig.name
 
 urlpatterns = [
     path('', Home.as_view(), name='home'),
+    path('detail/<str:slug>/', DetailProduct.as_view(), name='detail_product'),
 ]

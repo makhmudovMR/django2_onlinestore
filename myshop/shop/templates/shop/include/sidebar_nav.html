@@ -1,5 +1,5 @@
 <div class="list-group">
-    <a href="#" class="list-group-item">Category 1</a>
-    <a href="#" class="list-group-item">Category 2</a>
-    <a href="#" class="list-group-item">Category 3</a>
+    {% for category_item in category %}
+    <a href="" class="list-group-item">{{category_item.name}}</a>
+    {% endfor %}
 </div>
