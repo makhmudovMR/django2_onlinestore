@@ -41,6 +41,22 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+class CartItem(models.Model):
+    product = models.ForeignKey('shop.Product', on_delete=models.CASCADE)
+    qty = models.PositiveIntegerField(default=1)
+    item_total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    def __str__(self):
+        return 'cart item for product {}'.format(self.product.title)
+
+
+class Cart(models.Model):
+    items = models.ManyToManyField('shop.CartItem')
+    cart_total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    def __str__(self):
+        return str(self.id)
+
 # link signals
 
 pre_save.connect(pre_save_category_slug, sender=Category)

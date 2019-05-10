@@ -15,18 +15,20 @@
 
     <div class="col-lg-9">
 
-    <div class="card mt-4">
+    <div class="card mt-4 mb-4">
         <img class="card-img-top img-fluid" src="{{product_item.image.url}}" style='max-width:250px; margin:auto;'>
         <div class="card-body">
         <h3 class="card-title">{{product_item.name}}</h3>
         <h4>{{product_item.price}}</h4>
         <p class="card-text">{{product_item.description}}</p>
-        <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-        4.0 stars
+        <a href='#' class='btn btn-primary'>Add to cart</a>
+        
         </div>
     </div>
     <!-- /.card -->
 
+
+    {% comment %} 
     <div class="card card-outline-secondary my-4">
         <div class="card-header">
         Product Reviews
@@ -43,7 +45,7 @@
         <hr>
         <a href="#" class="btn btn-success">Leave a Review</a>
         </div>
-    </div>
+    </div> {% endcomment %}
     <!-- /.card -->
 
     </div>

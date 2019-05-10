@@ -26,6 +26,7 @@
                     </h4>
                     <h5>{{product_item.price}}</h5>
                     <p class="card-text">{{product_item.description|truncatewords:15}}</p>
+                    <a href='{% url "shop:add_to_cart" slug=product_item.slug %}' class='btn btn-primary'>Add to cart</a>
                     </div>
                     <div class="card-footer">
                     <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
