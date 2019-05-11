@@ -31,6 +31,25 @@
                 })
 
             })
+
+            $('.remove_from_cart').on('click', function(e){
+                e.preventDefault();
+                var id = $(this).attr('data-id');
+                var obj = $(this)
+                data = {
+                    id: id
+                }
+                $.ajax({
+                    url: '{% url "shop:remove_from_cart" %}',
+                    data: data,
+                    type: 'GET',
+                    success: function(data){
+                        $('#cart_count').html(data.cart_total)
+                        obj.parent().parent().parent().parent().remove()
+                    }
+                })
+
+            })
         })
     </script>
 {% endblock script %}

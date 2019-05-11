@@ -92,10 +92,11 @@ class CartHandlerAddToCart(View):
         return HttpResponseRedirect(reverse('shop:cart'))
 
 class CartHandlerRemoveFromCart(View):
-    def get(self, request, id):
+    def get(self, request):
+        id = request.GET.get('id')
         cart = get_cart(request)
         cart_item = CartItem.objects.get(id=id)
         if cart_item in cart.items.all():
             cart.items.remove(cart_item)
             cart.save()
-        return HttpResponseRedirect(reverse('shop:cart'))
+        return JsonResponse({'cart_total': cart.items.count()})

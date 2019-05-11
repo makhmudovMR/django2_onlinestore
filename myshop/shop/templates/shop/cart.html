@@ -13,7 +13,7 @@
                         <div class='col'>{{cart_item.product.title}}</div>
                         <div class='col'>{{cart_item.qty}}</div>
                         <div class='col'>{{cart_item.item_total}}</div>
-                        <div class='col'><a href='{% url "shop:remove_from_cart" id=cart_item.id %}' class="btn btn-light">Remove</a></div>
+                        <div class='col'><a href='' data-id='{{cart_item.id}}' class="btn btn-light remove_from_cart">Remove</a></div>
                     </div> 
                 </div>
             </div>
