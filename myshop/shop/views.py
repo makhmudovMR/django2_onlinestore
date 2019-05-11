@@ -1,6 +1,6 @@
 from django.shortcuts import render, reverse
 from django.views.generic import View
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from .models import *
 
 
@@ -78,7 +78,8 @@ class CartPage(View):
 # handler
 class CartHandlerAddToCart(View):
 
-    def get(self, request, slug):
+    def get(self, request):
+        slug = request.GET.get('product_slug')
         cart = get_cart(request)
         
         product = Product.objects.get(slug__iexact=slug)
@@ -87,7 +88,7 @@ class CartHandlerAddToCart(View):
         if new_cart_item not in cart.items.all():
             cart.items.add(new_cart_item)
             cart.save()
-            return HttpResponseRedirect(reverse('shop:cart'))
+            return JsonResponse({'cart_total': cart.items.count()})
         return HttpResponseRedirect(reverse('shop:cart'))
 
 class CartHandlerRemoveFromCart(View):

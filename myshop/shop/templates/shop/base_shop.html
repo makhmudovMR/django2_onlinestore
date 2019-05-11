@@ -8,3 +8,29 @@
 {% block footer %}
     {% include "shop/include/footer.html" %}
 {% endblock footer %}
+
+{% block script %}
+    <script>
+        $(document).ready(function(){
+            $('.add_to_cart').on('click', function(e){
+                e.preventDefault();
+                var product_slug = $(this).attr('data-slug');
+                console.log(product_slug);
+
+                data = {
+                    product_slug: product_slug,
+                }
+
+                $.ajax({
+                    type: 'GET',
+                    url: '{% url "shop:add_to_cart" %}',
+                    data: data,
+                    success: function(data){
+                        $('#cart_count').html(data.cart_total)
+                    }
+                })
+
+            })
+        })
+    </script>
+{% endblock script %}
