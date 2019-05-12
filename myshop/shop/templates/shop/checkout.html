@@ -6,24 +6,24 @@
     <br>
     <div class="row">
         <div class='col'>
+        <h1>Ваш предварительный заказ</h1>
         {% if cart.items.count != 0 %}
             {% for cart_item in cart.items.all %}
-            <div class="card mb-2">
+            <div class="card mb-2 bg-success text-white">
                 <div class="card-body ">
                     <div class="row">
                         <div class='col'>{{cart_item.product.title}}</div>
-                        <div class='col'><center><input type='number' min='1' class='cart_item_qty' data-id='{{cart_item.id}}' max='20' name='qty' value='{{cart_item.qty}}'></center></div>
+                        <div class='col'><center>{{cart_item.qty}}</center></div>
                         <div class='col' id='cart-item-id-{{cart_item.id}}'>{{cart_item.item_total}}</div>
-                        <div class='col'><a href='' data-id='{{cart_item.id}}' class="btn btn-light remove_from_cart">Remove</a></div>
-                    </div> 
+                    </div>
                 </div>
             </div>
             {% endfor %}
             <div class="card mb-2">
                 <div class="card-body ">
                     <div class="row">
-                        <div class='col cart_total_price'>0</div>
-                        <div class='col'><a href='{% url "shop:checkout" %}' class='btn btn-success'>Checkout</a></div>
+                        <div class='col cart_total_price'>{{total_price}}</div>
+                        <div class='col cart_total_price'><a href='{% url "shop:order" %}' class='btn btn-success'>to order</a></div>
                     </div> 
                 </div>
             </div>

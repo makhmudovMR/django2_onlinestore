@@ -1,6 +1,7 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, redirect
 from django.views.generic import View
 from django.http import HttpResponseRedirect, JsonResponse
+from .forms import *
 from .models import *
 
 
@@ -74,6 +75,54 @@ class CartPage(View):
             'cart': cart
         }
         return render(request, 'shop/cart.html', context=context)
+
+class CheckOutPage(View):
+    def get(self, request):
+        cart = get_cart(request)
+        total_price = 0
+        for item in cart.items.all():
+            total_price += item.item_total
+        context = {
+            'cart': cart,
+            'total_price': total_price,
+        }
+        return render(request, 'shop/checkout.html', context=context)
+
+class OrderPage(View):
+
+    def post(self, request):
+        cart = get_cart(request)
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            # some wrong
+            new_order = Order()
+            new_order.user = request.user
+            new_order.save()
+            new_order.items.add(cart)
+            new_order.first_name = form.cleaned_data['name']
+            new_order.last_name = form.cleaned_data['last_name']
+            new_order.phone = form.cleaned_data['phone']
+            new_order.email = form.cleaned_data['email']
+            new_order.address = form.cleaned_data['address']
+            new_order.buying_type = form.cleaned_data['buying_type']
+            new_order.date = form.cleaned_data['date']
+            new_order.comment = form.cleaned_data['comment']
+            new_order.total = cart.cart_total
+            new_order.save()
+
+            del request.session['cart_id']
+            del request.session['total']
+
+            return redirect(reverse('shop:thankyou'))
+
+
+    def get(self, request):
+        form = OrderForm()
+        return render(request, 'shop/order.html', context={'form': form})
+
+class ThankYou(View):
+    def get(self, request):
+        return render(request, 'shop/thankyou.html')
 
 # handler
 class CartHandlerAddToCart(View):

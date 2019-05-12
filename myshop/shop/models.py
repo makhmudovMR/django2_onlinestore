@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
+from django.conf import settings
 from time import time
 from transliterate import translit
 
@@ -56,6 +57,30 @@ class Cart(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+ORDER_STATUS_CHOICES = (
+    ('Принят в обработку', 'Принят в обработку'),
+    ('Выполняется', 'Выполняется'),
+    ('Оплачен', 'Оплачен'),
+)
+
+class Order(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) # как я понимаю по умолчанию авторизованный пользователь делает заказ
+    items = models.ManyToManyField('shop.Cart') # подумать над этим полем
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
+    email = models.EmailField()
+    phone = models.CharField(max_length=100)
+    address = models.CharField(max_length=255)
+    bying_type = models.CharField(max_length=255, choices=(('Самовызов', 'Самовызов'), ('Доставка', 'Доставка')))
+    date = models.DateTimeField(auto_now_add=True)
+    comment = models.TextField(blank=True, null=True)
+    status = models.CharField(max_length=200, choices=ORDER_STATUS_CHOICES)
+    total = models.DecimalField(max_digits=9, decimal_places=2, default=0)
+
+
+    def __str__(self):
+        return '{} {}'.format(self.first_name, self.last_name)
 
 # link signals
 
