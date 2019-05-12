@@ -67,6 +67,7 @@
                     type: 'GET',
                     success: function(data){
                         $('#cart-item-id-'+data.cart_id).html(data.item_total)
+                        $('.cart_total_price').html(data.new_cart_total)
                     }
                 })
             })

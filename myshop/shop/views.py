@@ -111,8 +111,16 @@ class CartHandlerChangeQty(View):
         cart_item.qty = value_qty
         cart_item.item_total = int(cart_item.qty) * int(cart_item.product.price)
         cart_item.save()
+        
+        new_cart_total = 0
+        cart = get_cart(request)
+        for cart_item_ in cart.items.all():
+            new_cart_total += float(cart_item_.item_total)
+        cart.cart_total = new_cart_total
+        cart.save()
         return JsonResponse({
             'qty': cart_item.qty, 
             'cart_id': cart_item.id, 
             'item_total': cart_item.item_total,
+            'new_cart_total': cart.cart_total
         })
