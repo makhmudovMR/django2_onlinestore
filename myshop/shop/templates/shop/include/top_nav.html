@@ -10,9 +10,19 @@
         <li class="nav-item active">
         <a class="nav-link" href="{% url 'shop:home' %}">Home</a>
         </li>
+        {% if request.user.is_authenticated %}
         <li class="nav-item">
         <a class="nav-link" href="{% url 'shop:cart' %}">Cart <span class="badge badge-primary" id='cart_count'>{{cart.items.count}}</span></a>
         </li>
+        <li class="nav-item">
+        <a class="nav-link" href="{% url 'shop:userpanel' %}">Userpanel: {{request.user.first_name}} </a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+        <a class="nav-link" href="">Hello Guest</a>
+        </li>
+        {% endif %}
+        
 
     </ul>
     </div>

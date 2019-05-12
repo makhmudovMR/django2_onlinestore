@@ -15,5 +15,6 @@ urlpatterns = [
     path('changecartitemqty/', CartHandlerChangeQty.as_view(), name='change_qty'),
     path('checkout/', CheckOutPage.as_view(), name='checkout'),
     path('order/', OrderPage.as_view(), name='order'),
-    path('thankyou/', ThankYou.as_view(), name='thankyou')
+    path('thankyou/', ThankYou.as_view(), name='thankyou'),
+    path('userpanel/', UserPanel.as_view(), name='userpanel')
 ]

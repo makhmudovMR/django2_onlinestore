@@ -1,6 +1,7 @@
 from django.shortcuts import render, reverse, redirect
 from django.views.generic import View
 from django.http import HttpResponseRedirect, JsonResponse
+from django.contrib.auth.mixins import LoginRequiredMixin 
 from .forms import *
 from .models import *
 
@@ -123,6 +124,19 @@ class OrderPage(View):
 class ThankYou(View):
     def get(self, request):
         return render(request, 'shop/thankyou.html')
+
+
+class UserPanel(LoginRequiredMixin, View):
+    raise_exception = True
+    def get(self, request):
+        order = Order.objects.filter(user=request.user)
+        cart = get_cart(request)
+        context = {
+            'cart': cart,
+            'order': order,
+
+        }
+        return render(request, 'shop/userpanel.html', context=context)
 
 # handler
 class CartHandlerAddToCart(View):

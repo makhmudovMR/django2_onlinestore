@@ -66,7 +66,7 @@ ORDER_STATUS_CHOICES = (
 
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) # как я понимаю по умолчанию авторизованный пользователь делает заказ
-    items = models.ManyToManyField('shop.Cart') # подумать над этим полем
+    items = models.ManyToManyField('shop.Cart') # подумать над этим полем (закрепляем корзину за ордером)
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     email = models.EmailField()

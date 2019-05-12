@@ -1,0 +1,38 @@
+{% extends "shop/base_shop.html" %}
+
+{% block content %}
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-3">
+
+        <h1 class="my-4">Userpanel</h1>
+            Hello {{request.user.first_name}}!
+        </div>
+        <!-- /.col-lg-3 -->
+
+        <div class="col-lg-9">
+        <br>
+        {% for order_item in order %}
+            <div class="card mb-2">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class='col'>{{order_item.first_name}} {{order_item.last_name}}</div>
+                        <div class='col'>{{order_item.date}}</div>
+                        <div class='col'>{{order_item.status}}</div>
+                        <div class='col'>{{order_item.total}}</div>
+                    </div> 
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+</div>
+<!-- /.container -->
+{% endblock content %}
