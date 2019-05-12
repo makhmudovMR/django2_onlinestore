@@ -50,6 +50,26 @@
                 })
 
             })
+
+            $('.cart_item_qty').on('click', function(){
+                var id = $(this).attr('data-id');
+                var val = $(this).val();
+                var obj = $(this)
+                data = {
+                    value: val,
+                    id: id
+                }
+                console.log(data)
+                
+                $.ajax({
+                    url: '{% url "shop:change_qty" %}',
+                    data: data,
+                    type: 'GET',
+                    success: function(data){
+                        $('#cart-item-id-'+data.cart_id).html(data.item_total)
+                    }
+                })
+            })
         })
     </script>
 {% endblock script %}

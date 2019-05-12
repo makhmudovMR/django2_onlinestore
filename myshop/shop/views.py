@@ -100,3 +100,19 @@ class CartHandlerRemoveFromCart(View):
             cart.items.remove(cart_item)
             cart.save()
         return JsonResponse({'cart_total': cart.items.count()})
+
+
+class CartHandlerChangeQty(View):
+
+    def get(self, request):
+        value_qty = request.GET.get('value')
+        id = request.GET.get('id')
+        cart_item = CartItem.objects.get(id=id)
+        cart_item.qty = value_qty
+        cart_item.item_total = int(cart_item.qty) * int(cart_item.product.price)
+        cart_item.save()
+        return JsonResponse({
+            'qty': cart_item.qty, 
+            'cart_id': cart_item.id, 
+            'item_total': cart_item.item_total,
+        })

@@ -11,8 +11,8 @@
                 <div class="card-body ">
                     <div class="row">
                         <div class='col'>{{cart_item.product.title}}</div>
-                        <div class='col'>{{cart_item.qty}}</div>
-                        <div class='col'>{{cart_item.item_total}}</div>
+                        <div class='col'><center><input type='number' min='1' class='cart_item_qty' data-id='{{cart_item.id}}' max='20' name='qty' value='{{cart_item.qty}}'></center></div>
+                        <div class='col' id='cart-item-id-{{cart_item.id}}'>{{cart_item.item_total}}</div>
                         <div class='col'><a href='' data-id='{{cart_item.id}}' class="btn btn-light remove_from_cart">Remove</a></div>
                     </div> 
                 </div>
