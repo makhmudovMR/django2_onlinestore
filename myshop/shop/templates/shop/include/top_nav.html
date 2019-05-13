@@ -17,9 +17,18 @@
         <li class="nav-item">
         <a class="nav-link" href="{% url 'shop:userpanel' %}">Userpanel: {{request.user.first_name}} </a>
         </li>
+        <li class="nav-item">
+        <a class="nav-link" href="{% url 'shop:logout' %}">Logout</a>
+        </li>
         {% else %}
         <li class="nav-item">
         <a class="nav-link" href="">Hello Guest</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="{% url 'shop:login' %}">Login</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="{% url 'shop:register' %}">Register</a>
         </li>
         {% endif %}
         

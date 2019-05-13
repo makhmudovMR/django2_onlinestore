@@ -2,6 +2,7 @@ from django.shortcuts import render, reverse, redirect
 from django.views.generic import View
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin 
+from django.contrib.auth import login, authenticate, logout
 from .forms import *
 from .models import *
 
@@ -138,7 +139,58 @@ class UserPanel(LoginRequiredMixin, View):
         }
         return render(request, 'shop/userpanel.html', context=context)
 
+class RegisterView(View):
+    def post(self, request):
+        form = RegsiterForm(request.POST or None)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            email = form.cleaned_data['email']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            user = form.save(commit=False)
+            user.email = email
+            user.set_password(password)
+            user.first_name = first_name
+            user.last_name = last_name
+            user.save()
+            login(request,user)
+        return redirect(reverse('shop:home'))
+        
+
+    def get(self, request):
+        form = RegsiterForm()
+        return render(request, 'shop/register.html', context={'form': form})
+
+
+class LoginView(View):
+    def post(self, request):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            if user:
+                login(request, user)
+                return redirect(reverse('shop:home'))
+        return redirect(reverse('shop:home'))
+
+
+
+    def get(self, request):
+        form = LoginForm()
+        return render(request, 'shop/login.html', context={'form': form})
+
+
+
 # handler
+
+class LogoutHandler(View):
+
+    def get(self, request):
+        logout(request)
+        return redirect(reverse('shop:home'))
+
 class CartHandlerAddToCart(View):
 
     def get(self, request):

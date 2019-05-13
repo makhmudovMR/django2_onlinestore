@@ -1,0 +1,32 @@
+{% extends "shop/base_shop.html" %}
+
+{% block content %}
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-3">
+
+        <h1 class="my-4">Userpanel</h1>
+            Hello {{request.user.first_name}}!
+        </div>
+        <!-- /.col-lg-3 -->
+
+        <div class="col-lg-9">
+        <br>
+        <form action='' method='post'>
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type='submit'>ok</button>
+        </form>
+        
+        </div>
+        <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+</div>
+<!-- /.container -->
+{% endblock content %}

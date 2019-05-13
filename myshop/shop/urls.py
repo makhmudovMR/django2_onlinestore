@@ -16,5 +16,8 @@ urlpatterns = [
     path('checkout/', CheckOutPage.as_view(), name='checkout'),
     path('order/', OrderPage.as_view(), name='order'),
     path('thankyou/', ThankYou.as_view(), name='thankyou'),
-    path('userpanel/', UserPanel.as_view(), name='userpanel')
+    path('userpanel/', UserPanel.as_view(), name='userpanel'),
+    path('register/', RegisterView.as_view(), name='register'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutHandler.as_view(), name='logout'),
 ]
